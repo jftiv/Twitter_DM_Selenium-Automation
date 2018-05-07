@@ -27,12 +27,11 @@ namespace AutoEmail
             typePass.SendKeys(/* 'Insert password here' */);
             typePass.SendKeys(Keys.Enter);
 
-            //Click DM Button
-
+            // Click DM button
             IWebElement slideIntoDMs = driver.FindElement(By.ClassName("dm-nav"));
             slideIntoDMs.Click();
 
-            // Click New Message Button
+            // Click New Message button
             IWebElement newMessage = driver.FindElement(By.XPath("//span[text()='New Message']"));
             newMessage.Click();
 
