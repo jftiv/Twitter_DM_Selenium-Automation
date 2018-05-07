@@ -1,6 +1,4 @@
 using System;
-using Xunit;
-using NUnit;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
@@ -20,11 +18,11 @@ namespace AutoEmail
 
             // Get to login page
             IWebElement findLogin = driver.FindElement(By.CssSelector("input[autocomplete='username']"));
-            findLogin.SendKeys(/* 'Insert username or email here' */);
+            findLogin.SendKeys(/* "Insert username or email here" */);
 
             // Type in password
             IWebElement typePass = driver.FindElement(By.CssSelector("input[type='password']"));
-            typePass.SendKeys(/* 'Insert password here' */);
+            typePass.SendKeys(/* "Insert password here" */);
             typePass.SendKeys(Keys.Enter);
 
             // Click DM button
@@ -37,7 +35,7 @@ namespace AutoEmail
 
             // Type user + enter
             IWebElement DMVictim = driver.FindElement(By.XPath("//textarea[@placeholder='Enter a name']"));
-            DMVictim.SendKeys(/* 'Insert DM Target User here' */);
+            DMVictim.SendKeys(/* "Enter target user here" */);
             DMVictim.SendKeys(Keys.Enter);
 
             // Click Next
@@ -45,12 +43,18 @@ namespace AutoEmail
             nextButton.Click();
 
             // Type intended text
+            string intendedDM = /* "Enter message here" */;
             IWebElement autoText = driver.FindElement(By.XPath("//div[@data-default-placeholder='Start a new message']"));
-            autoText.SendKeys(/* 'Insert message here' */);
+            autoText.SendKeys(intendedDM);
 
             // Click Send
             IWebElement sendOff = driver.FindElement(By.ClassName("DMComposer-send"));
             sendOff.Click();
+
+            // Confirm Message sent
+            var slideConfirm = driver.FindElements(By.XPath("//div[@class='DirectMessage-text']"));
+            string sentDM = slideConfirm[slideConfirm.Count - 1].Text;
+            Xunit.Assert.Contains(sentDM, intendedDM);
         }
     }
 }
